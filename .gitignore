@@ -1,0 +1,15 @@
+# secrets and local config - never commit
+.env
+.env.*
+*.pem
+*.key
+*secret*
+vapid*.json
+.supabase/
+.vercel/
+supabase/.temp/
+# tooling
+node_modules/
+*.log
+.DS_Store
+shots/

@@ -1,0 +1,235 @@
+<!DOCTYPE html><html lang='en'><head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width,initial-scale=1,viewport-fit=cover'>
+<meta name='robots' content='noindex,nofollow'><meta name='theme-color' content='#000000'>
+<meta name='mobile-web-app-capable' content='yes'><meta name='apple-mobile-web-app-capable' content='yes'><meta name='apple-mobile-web-app-title' content='Us'>
+<link rel='manifest' href='manifest.json'><link rel='apple-touch-icon' href='icon-192.png'><link rel='icon' href='icon-192.png'>
+<title>Us</title>
+<style>
+:root{--bg:#fff;--tx:#000;--mu:#8e8e93;--g:#f2f2f7;--g2:#e5e5ea;--me:#000;--met:#fff;--th:#ececee;--ok:#34c759;--bl:rgba(255,255,255,.72);color-scheme:light}
+@media(prefers-color-scheme:dark){:root{--bg:#000;--tx:#fff;--mu:#98989d;--g:#1c1c1e;--g2:#2c2c2e;--me:#fff;--met:#000;--th:#262629;--bl:rgba(0,0,0,.7);color-scheme:dark}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--tx);font:16px/1.35 -apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Roboto,sans-serif;overscroll-behavior:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;transition:transform .2s cubic-bezier(.2,.8,.2,1),opacity .2s}
+button:active{transform:scale(.93)}
+input,textarea{font:inherit;font-size:16px;color:inherit;background:var(--g);border:0;border-radius:14px;padding:12px 14px;outline:0;width:100%}
+.pill{background:var(--tx);color:var(--bg);border-radius:14px;padding:13px 18px;font-weight:600;width:100%}
+.gh{background:var(--g);border-radius:12px;padding:12px 14px;font-weight:500;width:100%;text-align:left}
+.gh.armed{background:#ff3b30;color:#fff}
+.mu{color:var(--mu);font-size:13px}.pd{padding:20px;text-align:center}
+#auth{height:100%;display:flex;flex-direction:column;justify-content:center;gap:12px;padding:28px;max-width:420px;margin:0 auto}
+#auth h1{font-size:44px;letter-spacing:-1.5px;margin:0}
+#auth p{color:var(--mu);margin:0 0 8px}
+#err{color:#ff3b30;min-height:20px;font-size:14px}
+#sw{color:var(--mu);font-size:14px;text-align:center;padding:6px}
+#app{display:none;height:100%;flex-direction:column;max-width:560px;margin:0 auto}
+#app.on{display:flex}
+header{display:flex;align-items:center;gap:12px;padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px;background:var(--bl);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:.5px solid var(--g2);z-index:5}
+#av{width:38px;height:38px;border-radius:50%;background:var(--tx);color:var(--bg);display:grid;place-items:center;font-weight:600;position:relative}
+#av i{position:absolute;right:-1px;bottom:-1px;width:12px;height:12px;border-radius:50%;background:var(--mu);border:2px solid var(--bg);transition:background .3s}
+#av i.on{background:var(--ok)}
+.ht{flex:1;min-width:0}.ht b{display:block;font-size:17px;letter-spacing:-.2px}.ht small{color:var(--mu);font-size:13px}
+#gear{color:var(--mu);padding:6px}
+#views{flex:1;position:relative;overflow:hidden}
+.view{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .3s,transform .45s cubic-bezier(.2,.8,.2,1)}
+.view.on{opacity:1;transform:none;pointer-events:auto}
+#msgs{flex:1;overflow-y:auto;padding:14px 14px 8px;display:flex;flex-direction:column;gap:6px;overscroll-behavior:contain}
+.w{position:relative;max-width:78%;display:flex;flex-direction:column;animation:pop .45s cubic-bezier(.2,.9,.3,1.15)}
+.w.me{align-self:flex-end;align-items:flex-end}.w.th{align-self:flex-start;align-items:flex-start}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.94)}to{opacity:1;transform:none}}
+.b{padding:9px 14px;border-radius:20px;overflow-wrap:anywhere;white-space:pre-wrap;cursor:pointer}
+.me .b{background:var(--me);color:var(--met);border-bottom-right-radius:6px}
+.th .b{background:var(--th);border-bottom-left-radius:6px}
+.b.ph{padding:0;overflow:hidden;background:var(--g)}
+.b.ph img{display:block;max-width:100%;max-height:340px;min-width:170px;min-height:120px;object-fit:cover}
+.b.vc{display:flex;align-items:center;gap:10px;min-width:170px}
+.pl{width:30px;height:30px;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center;font-size:11px;flex:none}
+.wv{flex:1;height:16px;background:repeating-linear-gradient(90deg,currentColor 0 2px,transparent 2px 5px);opacity:.45}
+.vc small{opacity:.7}
+.qt{background:var(--g);color:var(--tx);border-left:3px solid var(--mu);border-radius:12px;padding:5px 10px 14px;margin-bottom:-10px;max-width:260px;font-size:13px;cursor:pointer}
+.qt b{display:block;font-size:12px}.qt span{display:block;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fl .b{animation:fl 1.1s}@keyframes fl{30%{filter:brightness(.6)}}
+.qc{align-self:center;max-width:92%;text-align:center;background:var(--g);border-radius:22px;padding:16px 18px;margin:8px 0;animation:pop .5s cubic-bezier(.2,.9,.3,1.15)}
+.qc small{color:var(--mu);font-size:12px;display:block;margin-bottom:6px}
+.qc p{margin:0;font-size:20px;font-weight:600;letter-spacing:-.3px;overflow-wrap:anywhere;white-space:pre-line}
+.rx{display:flex;gap:4px;margin-top:3px}
+.chip{background:var(--g);border-radius:99px;padding:1px 8px;font-size:13px;cursor:pointer}.chip.m{outline:1.5px solid var(--tx)}
+.pk{display:flex;align-items:center;gap:2px;background:var(--bg);border-radius:99px;padding:4px 6px;box-shadow:0 4px 18px rgba(0,0,0,.2);margin-top:4px;animation:pop .3s}
+.pk button{font-size:22px;padding:2px 5px}
+#cmp,#rbar{display:flex;align-items:center;gap:8px;padding:8px 12px;border-top:.5px solid var(--g2)}
+#cmp input{border-radius:99px}
+#rbar{display:none;padding:10px 16px}
+#view-rec #cmp{display:none}#view-rec #rbar{display:flex}
+#rp{display:none;align-items:center;gap:10px;padding:8px 14px 0;border-top:.5px solid var(--g2)}#rp.on{display:flex}
+#rp .rt{flex:1;min-width:0;border-left:3px solid var(--tx);padding-left:10px;font-size:13px}#rp b{display:block}#rp span{display:block;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#nb{margin:8px 14px 0;width:auto;display:none}
+.ic{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:var(--mu);flex:none}
+.ic.snd{background:var(--tx);color:var(--bg)}
+#rt{font-variant-numeric:tabular-nums}
+#gtop{padding:12px 16px 8px;display:flex;flex-direction:column;gap:10px}
+.seg{display:flex;background:var(--g);border-radius:10px;padding:2px}
+.seg button{flex:1;padding:6px;border-radius:8px;font-size:13px;font-weight:600;color:var(--mu)}
+.seg button.on{background:var(--bg);color:var(--tx);box-shadow:0 1px 4px rgba(0,0,0,.14)}
+#gl{flex:1;overflow-y:auto;overscroll-behavior:contain}
+.gq{display:flex;gap:12px;padding:13px 16px;border-bottom:.5px solid var(--g2);cursor:pointer}
+.gq b{color:var(--mu);min-width:34px;font-variant-numeric:tabular-nums}
+.gq .t{flex:1;overflow-wrap:anywhere}.gq.u .t{opacity:.4}
+.gq .h{font-size:20px;line-height:1;padding:0 2px}
+#tabs{display:flex;border-top:.5px solid var(--g2);padding:6px 0 calc(env(safe-area-inset-bottom,0px) + 6px);background:var(--bl);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px)}
+#tabs button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--mu);font-size:11px;font-weight:600;padding:4px}
+#tabs button.on{color:var(--tx)}
+#sheet{position:absolute;inset:0;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .3s;z-index:20;display:flex;align-items:flex-end}
+#sheet.on{opacity:1;pointer-events:auto}
+#sh{background:var(--bg);width:100%;border-radius:22px 22px 0 0;padding:18px 16px calc(env(safe-area-inset-bottom,0px) + 16px);transform:translateY(100%);transition:transform .5s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;gap:8px;max-height:90%;overflow:auto}
+#sheet.on #sh{transform:none}
+#sh textarea{min-height:90px;resize:none}
+#ih{display:none}#ih.on{display:block}
+#emo{position:fixed;left:0;right:0;bottom:0;max-width:560px;margin:0 auto;max-height:55%;overflow:auto;background:var(--bg);border-radius:22px 22px 0 0;box-shadow:0 -8px 40px rgba(0,0,0,.25);padding:14px 10px calc(env(safe-area-inset-bottom,0px) + 14px);transform:translateY(105%);transition:transform .45s cubic-bezier(.2,.8,.2,1);z-index:30;display:grid;grid-template-columns:repeat(8,1fr);gap:2px}
+#emo.on{transform:none}#emo button{font-size:26px;padding:4px 0}
+#emb{position:fixed;inset:0;z-index:29;display:none}#emb.on{display:block}
+#toast{position:fixed;left:50%;bottom:110px;transform:translate(-50%,20px);background:var(--tx);color:var(--bg);padding:10px 16px;border-radius:99px;opacity:0;transition:.4s cubic-bezier(.2,.8,.2,1);z-index:50;font-size:14px;pointer-events:none}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+#lb{position:fixed;inset:0;background:rgba(0,0,0,.92);display:none;place-items:center;z-index:40}#lb.on{display:grid}#lb img{max-width:96%;max-height:92%;border-radius:8px}
+#cover{display:none;position:fixed;inset:0;z-index:99;background:#fffbe6;color:#222;overflow:auto;padding:max(18px,env(safe-area-inset-top)) 20px 20px;font-family:system-ui,sans-serif}
+#cover.on{display:block}#cover h2{margin:0 0 14px;font-size:26px;user-select:none;-webkit-user-select:none}#cover li{margin:8px 0;font-size:17px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<div id='auth'><h1>Us</h1><p>A private space for two.</p>
+<input id='nm' placeholder='Name' autocomplete='username'><input id='pw' type='password' placeholder='Password' autocomplete='current-password'><input id='code' placeholder='Invite code' style='display:none' autocapitalize='characters'>
+<div id='err'></div><button class='pill' id='go'>Sign in</button><button id='sw'>First time? Create account</button></div>
+<div id='app'>
+<header><div id='av'><span id='ai'>·</span><i></i></div><div class='ht'><b id='pn'>Us</b><small id='ps'>Connecting…</small></div><button id='gear' aria-label='Settings'></button></header>
+<div id='views'>
+<section class='view on' id='v-chat'><button class='gh' id='nb'>🔔 Turn on notifications</button><div id='msgs'></div>
+<div id='rp'><div class='rt'><b></b><span></span></div><button class='ic' id='rpx'>✕</button></div>
+<div id='cmp'><button class='ic' id='pb' aria-label='Photo'></button><input id='ti' placeholder='Message' autocomplete='off'><button class='ic' id='sb' aria-label='Send'></button></div>
+<div id='rbar'><button class='ic' id='rc'>✕</button><span style='flex:1'>● Recording <b id='rt'>0:00</b></span><button class='ic snd' id='rs'></button></div></section>
+<section class='view' id='v-game'><div id='gtop'><input id='gs' placeholder='Search questions or a number'><div class='seg'><button class='on' data-f='all'>All</button><button data-f='new'>Unasked</button><button data-f='fav'>♥ Favorites</button></div><button class='gh' id='rn'>🎲 Surprise me</button></div><div id='gl'></div></section>
+</div>
+<nav id='tabs'><button class='on' data-t='chat'></button><button data-t='game'></button></nav>
+<div id='sheet'><div id='sh'><b style='font-size:20px'>Settings</b>
+<textarea id='list' placeholder='Paste your question list, one per line'></textarea><button class='pill' id='sl'>Save question list</button><div class='mu' id='cnt'></div>
+<button class='gh' id='nt'>🔔 Notifications</button><button class='gh' id='np'>Message previews</button>
+<button class='gh' id='ra'>Reset asked questions</button><button class='gh' id='cc'>Clear chat</button><button class='gh' id='uc'>Undo last clear</button><button class='gh' id='hb'>🙈 Hide app</button><button class='gh' id='inst'>📲 Add to Home Screen</button><div id='ih' class='mu'></div><button class='gh' id='so'>Sign out</button></div></div>
+</div>
+<div id='emb'></div><div id='emo'></div>
+<input type='file' id='fi' accept='image/*' hidden>
+<div id='lb'><img id='lbi' alt=''></div><div id='toast'></div>
+<div id='cover'><h2 id='ct'>Notes</h2><ul><li>Rice, onions, tomatoes, eggs</li><li>Pay light bill</li><li>Call mum</li><li>Buy airtime</li><li>Charge power bank</li></ul></div>
+<script>
+const U='https://lzqnxawxehmqgswuzpyn.supabase.co/rest/v1/rpc/',K='sb_publishable_bAm2KsLV8__Y4nWSFesZeQ_38-Ly6DE',VAPID='BNd17JGJ71iJJh1LDfXskE8-lNSlHE3Kga3a7_uCqqJLP-RaOmdp4h-AKTVJwyfeXXdnAnXPjoC07PGxeNcqE0g';
+const $=i=>document.getElementById(i);
+const sv=p=>`<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'>${p}</svg>`;
+const I={gear:sv(`<circle cx='12' cy='12' r='3'/><path d='M19 12h2M3 12h2M12 3v2M12 19v2M5.6 5.6 7 7M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4'/>`),plus:sv(`<path d='M12 5v14M5 12h14'/>`),up:sv(`<path d='M12 19V5M5 12l7-7 7 7'/>`),mic:sv(`<rect x='9' y='3' width='6' height='11' rx='3'/><path d='M5 11a7 7 0 0 0 14 0M12 18v3'/>`),chat:sv(`<path d='M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z'/>`),q:sv(`<circle cx='12' cy='12' r='9'/><path d='M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01'/>`)};
+$('gear').innerHTML=I.gear;$('pb').innerHTML=I.plus;$('rs').innerHTML=I.up;
+$('tabs').children[0].innerHTML=I.chat+'<span>Chat</span>';$('tabs').children[1].innerHTML=I.q+'<span>Questions</span>';
+let tok=localStorage.getItem('lv_t')||'',me=null,users=[],lastId=0,epoch=null,reacts=[],used=new Set(),favs=new Set(),Q={},listV=null,typingUntil=0,busy=false,fails=0,tab='chat',filt='all',first=true,gsig='',replyTo=null,prev=localStorage.getItem('lv_prev')==='1';
+const media=new Map(),els=new Map(),EM=['❤️','😂','🔥','😮','😢','👍'];
+const EMS='😀😃😄😁😆😅😂🤣😊😇🙂😉😍🥰😘😗😚😋😛😜🤪😎🤩🥳😏😒😞😔😟😕😣😫😩🥺😢😭😤😠😡🤬🤯😳🥵🥶😱😨😰😓🤗🤔🤭🤫🙄😬😮😲🥱😴😪🤤😵🤢🤧😷😈💀💩🤡👻🙈🙉🙊💋💌💘💝💖💗💓💞💕❤️🧡💛💚💙💜🖤🤍💔🔥✨⭐🌟💫🎉🎊🎁👍👎👌✌️🤞🤟🤙👏🙌🫶🙏💪👀😻😹🌹🌸🍑🍆💦🍒🍓🍌🍷🥂🍫☕🌙☀️🌈💯✅❌';
+const ALL=(()=>{try{return [...new Intl.Segmenter(undefined,{granularity:'grapheme'}).segment(EMS)].map(x=>x.segment)}catch(e){return Array.from(EMS)}})();
+async function rpc(fn,a){const r=await fetch(U+fn,{method:'POST',headers:{apikey:K,'Content-Type':'application/json'},body:JSON.stringify(a||{})});const j=await r.json().catch(()=>null);if(!r.ok){const m=(j&&j.message)||'error';if(m==='auth'&&fn!=='lv_login'&&fn!=='lv_register')logout(true);throw new Error(m)}return j}
+const call=(fn,a)=>rpc(fn,Object.assign({p_tok:tok},a||{}));
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2600)}
+function armed(btn,fn){const t=btn.textContent;let on=false,tm;btn.onclick=()=>{if(on){on=false;clearTimeout(tm);btn.textContent=t;btn.classList.remove('armed');fn();return}on=true;btn.textContent='Tap again to confirm';btn.classList.add('armed');tm=setTimeout(()=>{on=false;btn.textContent=t;btn.classList.remove('armed')},3500)}}
+let reg=false;
+$('sw').onclick=()=>{reg=!reg;$('code').style.display=reg?'block':'none';$('go').textContent=reg?'Create account':'Sign in';$('sw').textContent=reg?'Have an account? Sign in':'First time? Create account';$('err').textContent=''};
+$('go').onclick=async()=>{$('err').textContent='';const n=$('nm').value.trim(),p=$('pw').value;try{tok=reg?await rpc('lv_register',{p_name:n,p_pass:p,p_code:$('code').value.trim()}):await rpc('lv_login',{p_name:n,p_pass:p});localStorage.setItem('lv_t',tok);$('pw').value='';start()}catch(e){const m=e.message;$('err').textContent=m==='bad'?'Wrong name or password':m==='locked'?'Too many tries. Wait 10 minutes':m==='badcode'?'That invite code is wrong':m==='full'?'This space already has two people':m==='invalid'?'Enter a name and a password of 6+ characters':m.includes('duplicate')?'That name is taken':'Something went wrong. Try again'}};
+$('pw').onkeydown=e=>{if(e.key==='Enter')$('go').click()};
+function start(){$('auth').style.display='none';$('app').classList.add('on');epoch=null;lastId=0;els.clear();$('msgs').textContent='';first=true;clearReply();poll()}
+function logout(skip){if(!skip&&tok)call('lv_logout').catch(()=>{});tok='';localStorage.removeItem('lv_t');$('app').classList.remove('on');$('auth').style.display='flex';$('sheet').classList.remove('on');$('nb').style.display='none'}
+function nameOf(id){const u=users.find(x=>x.id===id);return u?u.name:''}
+function status(){const p=users.find(u=>u.id!==me);const dot=on=>$('av').querySelector('i').classList.toggle('on',on);if(!p){$('pn').textContent='Us';$('ai').textContent='·';$('ps').textContent='Waiting for your partner to join';dot(false);return}$('pn').textContent=p.name;$('ai').textContent=p.name[0].toUpperCase();$('ps').textContent=fails>2?'Reconnecting…':p.ty?'typing…':p.on?'Online':'Offline';dot(p.on&&fails<3)}
+async function loadMedia(id){if(media.has(id))return media.get(id);const j=await call('lv_getmedia',{p_id:id});const u='data:'+j.mime+';base64,'+j.data;media.set(id,u);return u}
+const exc=(k,b)=>k==='photo'?'📷 Photo':k==='voice'?'🎙 Voice note':k==='q'?b.split('\n').slice(1).join(' '):b;
+function setReply(m){replyTo={id:m.id,name:m.uid===me?'yourself':nameOf(m.uid)};$('rp').querySelector('b').textContent='Replying to '+replyTo.name;$('rp').querySelector('span').textContent=exc(m.kind,m.body).slice(0,100);$('rp').classList.add('on');$('ti').focus()}
+function clearReply(){replyTo=null;$('rp').classList.remove('on')}
+$('rpx').onclick=clearReply;
+function swipe(w,m){let x0=0,y0=0,dx=0,on=false,lock=false;
+ w.addEventListener('touchstart',e=>{const t=e.touches[0];x0=t.clientX;y0=t.clientY;dx=0;on=true;lock=false;w.style.transition='none'},{passive:true});
+ w.addEventListener('touchmove',e=>{if(!on)return;const t=e.touches[0],ax=t.clientX-x0,ay=t.clientY-y0;if(!lock&&Math.abs(ay)>Math.abs(ax)&&Math.abs(ay)>8){on=false;w.style.transform='';return}if(ax>8)lock=true;if(lock){dx=Math.max(0,Math.min(ax,90));w.style.transform=`translateX(${dx*.75}px)`}},{passive:true});
+ w.addEventListener('touchend',()=>{on=false;w.style.transition='transform .4s cubic-bezier(.2,.9,.3,1.25)';w.style.transform='';if(dx>55){setReply(m);try{navigator.vibrate&&navigator.vibrate(15)}catch(e){}}dx=0})}
+let emoId=0,emoBuilt=false;
+function openEmo(id){emoId=id;if(!emoBuilt){emoBuilt=true;ALL.forEach(e=>{const b=document.createElement('button');b.textContent=e;b.onclick=()=>{closeEmo();toggleReact(emoId,e)};$('emo').appendChild(b)})}$('emo').classList.add('on');$('emb').classList.add('on')}
+function closeEmo(){$('emo').classList.remove('on');$('emb').classList.remove('on')}
+$('emb').onclick=closeEmo;
+function add(m){const mine=m.uid===me,w=document.createElement('div');w.dataset.id=m.id;
+ if(m.kind==='q'){const p=m.body.split('\n'),n=p.shift();w.className='qc';w.innerHTML='<small></small><p></p>';w.children[0].textContent=(mine?'You':nameOf(m.uid))+' asked #'+n;w.children[1].textContent=p.join('\n')}
+ else{w.className='w '+(mine?'me':'th');const b=document.createElement('div');b.className='b';
+  const pick=()=>{const had=w.querySelector('.pk');document.querySelectorAll('.pk').forEach(x=>x.remove());if(had)return;const pk=document.createElement('div');pk.className='pk';EM.forEach(e=>{const x=document.createElement('button');x.textContent=e;x.onclick=ev=>{ev.stopPropagation();pk.remove();toggleReact(m.id,e)};pk.appendChild(x)});const pl=document.createElement('button');pl.textContent='+';pl.style.cssText='font-size:22px;color:var(--mu);padding:2px 8px';pl.onclick=ev=>{ev.stopPropagation();pk.remove();openEmo(m.id)};pk.appendChild(pl);w.appendChild(pk)};
+  if(m.kind==='text'){b.textContent=m.body;b.onclick=pick}
+  else if(m.kind==='photo'){b.className='b ph';const im=document.createElement('img');im.alt='';b.appendChild(im);loadMedia(m.media).then(u=>{im.src=u;im.onclick=()=>{$('lbi').src=u;$('lb').classList.add('on')}}).catch(()=>{})}
+  else{b.className='b vc';b.innerHTML="<span class='pl'></span><span class='wv'></span><small></small>";const pl=b.children[0];pl.textContent='▶';b.children[2].textContent=m.body+'s';let au=null;pl.onclick=async ev=>{ev.stopPropagation();try{if(au&&!au.paused){au.pause();pl.textContent='▶';return}if(!au){au=new Audio(await loadMedia(m.media));au.onended=()=>pl.textContent='▶'}await au.play();pl.textContent='❚❚'}catch(e){toast('Cannot play this voice note')}};b.onclick=pick}
+  if(m.reply&&m.rk){const q=document.createElement('div');q.className='qt';q.innerHTML='<b></b><span></span>';q.children[0].textContent=m.ru===me?'You':nameOf(m.ru);q.children[1].textContent=exc(m.rk,m.rb||'');q.onclick=()=>{const t=els.get(m.reply);if(t){t.scrollIntoView({block:'center',behavior:'smooth'});t.classList.add('fl');setTimeout(()=>t.classList.remove('fl'),1200)}};w.appendChild(q)}
+  w.appendChild(b);swipe(w,m)}
+ $('msgs').appendChild(w);els.set(m.id,w)}
+function toggleReact(id,e){const i=reacts.findIndex(r=>r.m===id&&r.u===me);if(i>=0&&reacts[i].e===e)reacts.splice(i,1);else{if(i>=0)reacts.splice(i,1);reacts.push({m:id,u:me,e})}updReacts();call('lv_react',{p_msg:id,p_emoji:e}).catch(()=>{})}
+function updReacts(){els.forEach((w,id)=>{const rs=reacts.filter(r=>r.m===id),sig=rs.map(r=>r.u+r.e).sort().join();if((w.dataset.rs||'')===sig)return;w.dataset.rs=sig;const o=w.querySelector('.rx');if(o)o.remove();if(!rs.length)return;const rx=document.createElement('div');rx.className='rx';const g={};rs.forEach(r=>{(g[r.e]=g[r.e]||{n:0,m:false}).n++;if(r.u===me)g[r.e].m=true});Object.keys(g).forEach(e=>{const c=document.createElement('span');c.className='chip'+(g[e].m?' m':'');c.textContent=e+(g[e].n>1?' '+g[e].n:'');c.onclick=()=>toggleReact(id,e);rx.appendChild(c)});w.appendChild(rx)})}
+async function poll(){if(busy||document.hidden||!tok)return;busy=true;
+ try{const d=await call('lv_poll',{p_last:lastId,p_typing:Date.now()<typingUntil});fails=0;me=d.me;users=d.users;
+  if(epoch!==null&&d.epoch!==epoch){epoch=d.epoch;els.clear();$('msgs').textContent='';lastId=0;first=true;busy=false;return poll()}
+  epoch=d.epoch;const box=$('msgs'),near=box.scrollHeight-box.scrollTop-box.clientHeight<140,wasFirst=first;let mineNew=false;
+  d.msgs.forEach(m=>{if(m.id>lastId)lastId=m.id;if(els.has(m.id))return;add(m);if(m.uid===me)mineNew=true;else if(!first&&navigator.vibrate){try{navigator.vibrate(25)}catch(e){}}});
+  if(first||near||mineNew)box.scrollTo({top:box.scrollHeight,behavior:first?'auto':'smooth'});first=false;
+  reacts=d.reacts;updReacts();used=new Set(d.used);favs=new Set(d.favs);if(d.lv!==listV){listV=d.lv;loadList()}else if(tab==='game')drawGame();status();
+  if(wasFirst)syncPush()
+ }catch(e){fails++;status()}
+ busy=false}
+setInterval(poll,2000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)poll()});
+function sync(){const t=$('ti').value.trim();$('sb').innerHTML=t?I.up:I.mic;$('sb').className='ic'+(t?' snd':'')}
+sync();
+$('ti').oninput=()=>{typingUntil=Date.now()+3000;sync()};
+$('ti').onkeydown=e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();sendText()}};
+$('sb').onclick=()=>$('ti').value.trim()?sendText():recStart();
+const newCid=()=>{try{return crypto.randomUUID().replace(/-/g,'')}catch(e){return Date.now().toString(36)+Math.random().toString(36).slice(2,14)}};
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+async function withRetry(fn){let last;for(let i=0;i<3;i++){try{return await fn()}catch(e){last=e;if(!(e instanceof TypeError||e.message==='error'))throw e;await wait(i?1800:700)}}throw last}
+const errText=(e,d)=>{const m=e&&e.message;return m==='badmedia'?"That file type isn't supported":m==='invalid'?'That message is empty or too long':d};
+const send=(k,b,mi,d,c)=>{const r=replyTo?replyTo.id:null,id=c||newCid();return withRetry(()=>call('lv_send',{p_kind:k,p_body:b,p_mime:mi,p_data:d,p_reply:r,p_cid:id})).then(x=>{if(replyTo&&replyTo.id===r)clearReply();return x})};
+let pend=null;
+async function sendText(){const t=$('ti').value.trim();if(!t)return;$('ti').value='';sync();const c=pend&&pend.t===t?pend.c:newCid();pend={t,c};try{await send('text',t,null,null,c);pend=null;poll()}catch(e){$('ti').value=t;sync();toast(errText(e,'Message did not send. Tap send to retry'))}}
+$('pb').onclick=()=>$('fi').click();
+$('fi').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;toast('Sending photo…');try{const u=await shrink(f);await send('photo','','image/jpeg',u.split(',')[1]);poll()}catch(x){toast(errText(x,'Photo did not send'))}};
+function shrink(f){return new Promise((res,rej)=>{const i=new Image();i.onload=()=>{const s=Math.min(1,1280/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.round(i.width*s);c.height=Math.round(i.height*s);c.getContext('2d').drawImage(i,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.75))};i.onerror=rej;i.src=URL.createObjectURL(f)})}
+$('lb').onclick=()=>$('lb').classList.remove('on');
+let rec=null,chunks=[],t0=0,tmr=null,mt='';
+async function recStart(){try{const st=await navigator.mediaDevices.getUserMedia({audio:true});mt=MediaRecorder.isTypeSupported('audio/webm;codecs=opus')?'audio/webm;codecs=opus':MediaRecorder.isTypeSupported('audio/mp4')?'audio/mp4':'';rec=new MediaRecorder(st,mt?{mimeType:mt}:{});chunks=[];rec.ondataavailable=e=>chunks.push(e.data);rec.start();t0=Date.now();document.body.id='view-rec';$('rt').textContent='0:00';tmr=setInterval(()=>{const s=Math.floor((Date.now()-t0)/1000);$('rt').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');if(s>=120)recStop(true)},250)}catch(e){toast('Allow microphone access to send voice notes')}}
+function recStop(go){if(!rec)return;const r=rec,dur=Math.round((Date.now()-t0)/1000);rec=null;clearInterval(tmr);document.body.id='';r.onstop=()=>{r.stream.getTracks().forEach(t=>t.stop());if(!go||dur<1)return;const ty=(r.mimeType||mt||'audio/webm').split(';')[0],b=new Blob(chunks,{type:ty}),fr=new FileReader();fr.onload=async()=>{try{await send('voice',String(dur),ty,fr.result.split(',')[1]);poll()}catch(e){toast(errText(e,'Voice note did not send'))}};fr.readAsDataURL(b)};r.stop()}
+$('rc').onclick=()=>recStop(false);$('rs').onclick=()=>recStop(true);
+function parse(t){const o={};let c=0;t.split(/\r?\n/).forEach(l=>{l=l.trim();const m=l.match(/^(\d+)\s*(?:[\.\)\-:]\s*|(?=[a-z]))(.+)$/);if(m){const q=m[2].replace(/^["“”]+|["“”]+$/g,'').trim();(o[m[1]]=o[m[1]]||[]).push(q);c++}});if(!c){let k=0;t.split(/\r?\n/).forEach(l=>{l=l.trim();if(l){k++;o[String(k)]=[l]}})}return o}
+async function loadList(){try{const t=await call('lv_getlist')||'';Q=parse(t);if(document.activeElement!==$('list'))$('list').value=t;$('cnt').textContent=Object.keys(Q).length+' numbers loaded';gsig='';drawGame()}catch(e){}}
+function drawGame(){const s=$('gs').value.trim().toLowerCase(),sig=[filt,s,[...used].join(),[...favs].join(),listV].join('|');if(sig===gsig)return;gsig=sig;const box=$('gl');box.textContent='';const ks=Object.keys(Q).sort((a,b)=>a-b);let c=0;
+ ks.forEach(n=>Q[n].forEach(q=>{if(filt==='new'&&used.has(n))return;if(filt==='fav'&&!favs.has(n))return;if(s&&n!==s&&!q.toLowerCase().includes(s))return;c++;const r=document.createElement('div');r.className='gq'+(used.has(n)?' u':'');r.innerHTML="<b></b><span class='t'></span><span class='h'></span>";r.children[0].textContent=n;r.children[1].textContent=q;const h=r.children[2];h.textContent=favs.has(n)?'♥':'♡';h.onclick=e=>{e.stopPropagation();toggleFav(n)};r.onclick=()=>ask(n);box.appendChild(r)}));
+ if(!c){const p=document.createElement('div');p.className='mu pd';p.textContent=ks.length?(filt==='fav'?'No favorites yet. Tap a heart.':'Nothing here.'):'No questions yet. Open settings and paste your list.';box.appendChild(p)}}
+function toggleFav(n){favs.has(n)?favs.delete(n):favs.add(n);gsig='';drawGame();call('lv_fav',{p_n:n}).catch(()=>{})}
+async function ask(n){const q=Q[n].join('\n\n');used.add(n);gsig='';const c=newCid();try{await withRetry(()=>call('lv_ask',{p_n:n,p_q:q,p_cid:c}));setTab('chat');poll()}catch(e){toast('Could not send that question')}}
+$('rn').onclick=()=>{const k=Object.keys(Q).filter(n=>!used.has(n));if(!k.length)return toast(Object.keys(Q).length?'You have asked everything!':'No questions loaded yet');ask(k[Math.random()*k.length|0])};
+$('gs').oninput=drawGame;
+document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{filt=b.dataset.f;document.querySelectorAll('.seg button').forEach(x=>x.classList.toggle('on',x===b));drawGame()});
+function setTab(t){tab=t;$('v-chat').classList.toggle('on',t==='chat');$('v-game').classList.toggle('on',t==='game');[...$('tabs').children].forEach(b=>b.classList.toggle('on',b.dataset.t===t));if(t==='game')drawGame();else $('msgs').scrollTo({top:$('msgs').scrollHeight})}
+[...$('tabs').children].forEach(b=>b.onclick=()=>setTab(b.dataset.t));
+$('gear').onclick=()=>$('sheet').classList.add('on');
+$('sheet').onclick=e=>{if(e.target===$('sheet'))$('sheet').classList.remove('on')};
+$('sl').onclick=async()=>{const t=$('list').value;try{await call('lv_setlist',{p_t:t});Q=parse(t);listV=null;gsig='';$('cnt').textContent=Object.keys(Q).length+' numbers saved ✓'}catch(e){$('cnt').textContent='Could not save'}};
+armed($('ra'),()=>{used.clear();gsig='';call('lv_unuse').then(()=>toast('Asked questions reset')).catch(()=>toast('Could not reset'))});
+armed($('cc'),()=>{call('lv_clear').then(()=>{$('sheet').classList.remove('on');poll()}).catch(()=>toast('Could not clear'))});
+$('uc').onclick=async()=>{try{const n=await call('lv_undo_clear');$('sheet').classList.remove('on');toast(n>0?'Restored '+n+' messages':'Nothing to restore');poll()}catch(e){toast('Could not restore')}};
+armed($('so'),()=>logout());
+let tp=0,tt=0;
+$('hb').onclick=()=>{$('sheet').classList.remove('on');$('cover').classList.add('on');document.title='Notes'};
+$('ct').onclick=()=>{const n=Date.now();tp=(n-tt<1200)?tp+1:1;tt=n;if(tp>=3){tp=0;$('cover').classList.remove('on');document.title='Us'}};
+let dp=null,sa=false;try{sa=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){}
+if(sa)$('inst').style.display='none';
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e});
+addEventListener('appinstalled',()=>{$('inst').style.display='none'});
+$('inst').onclick=()=>{if(dp){dp.prompt();dp.userChoice.then(()=>{dp=null}).catch(()=>{});return}const ua=navigator.userAgent||'',ios=/iphone|ipad|ipod/i.test(ua),inApp=/FBAN|FBAV|Instagram|WhatsApp|Line\/|; wv\)/i.test(ua);let t='';if(inApp)t+='You seem to be inside an in-app browser (like WhatsApp). Open this link in Safari or Chrome first. ';t+=ios?'On iPhone: tap the Share button in Safari, then Add to Home Screen.':'On Android: in Chrome tap the menu (three dots), then Install app or Add to Home screen.';$('ih').textContent=t;$('ih').classList.toggle('on')};
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+const b64=s=>{const r=(s+'='.repeat((4-s.length%4)%4)).replace(/-/g,'+').replace(/_/g,'/'),a=atob(r);return Uint8Array.from(a,c=>c.charCodeAt(0))};
+const canPush=()=>'serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window;
+async function getSub(){if(!canPush())return null;try{const reg=await navigator.serviceWorker.ready;return await reg.pushManager.getSubscription()}catch(e){return null}}
+async function refreshNt(){let st='unsupported';if(canPush())st=Notification.permission==='denied'?'denied':(await getSub())?'on':'off';$('nt').dataset.s=st;$('nt').textContent=st==='on'?'🔔 Notifications: on (tap to turn off)':st==='off'?'🔔 Turn on notifications':st==='denied'?'🔔 Blocked in browser settings':'🔔 Needs the app installed (Add to Home Screen)';$('np').textContent='Show message text in notifications: '+(prev?'on':'off');$('nb').style.display=(st==='off'&&tok)?'block':'none'}
+async function syncPush(){await refreshNt();const s=await getSub();if(s)call('lv_pushsub',{p_sub:s.toJSON(),p_preview:prev}).catch(()=>{})}
+async function enablePush(){try{if(Notification.permission!=='granted'&&await Notification.requestPermission()!=='granted'){toast('Notifications were not allowed');refreshNt();return}const reg=await navigator.serviceWorker.ready;let s=await reg.pushManager.getSubscription();if(!s)s=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64(VAPID)});await call('lv_pushsub',{p_sub:s.toJSON(),p_preview:prev});toast('Notifications on ✓');refreshNt()}catch(e){toast('Could not turn on notifications')}}
+$('nb').onclick=enablePush;
+$('nt').onclick=async()=>{const st=$('nt').dataset.s;if(st==='on'){const s=await getSub();if(s){await call('lv_pushoff',{p_endpoint:s.endpoint}).catch(()=>{});await s.unsubscribe()}refreshNt()}else if(st==='off')enablePush();else toast(st==='denied'?'Allow notifications for this site in your browser settings':'On iPhone, add the app to your Home Screen first')};
+$('np').onclick=async()=>{prev=!prev;localStorage.setItem('lv_prev',prev?'1':'0');const s=await getSub();if(s)await call('lv_pushsub',{p_sub:s.toJSON(),p_preview:prev}).catch(()=>{});refreshNt()};
+if(tok)start();
+</script></body></html>
